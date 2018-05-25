@@ -1,0 +1,37 @@
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div>
+        <label>Private Key</label>
+        <input id="private-key" value="">
+
+    </div>
+    <div>
+        <label><strong>My Block Producers: </strong></label>
+        <span id="my-bps"></span>
+    </div>
+    <div>
+        <button id="vote" onclick="vote()">Vote</button>
+    </div>
+
+    <h2>Block Producers</h2>
+    <table id="block-producers">
+        <thead><tr>
+            <th>Vote</th>
+            <th>Producer Name</th>
+            <th>Current Votes</th>
+        </tr></thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="eosjs-browser.js"></script>
+    <script src="main.js"></script>
+</body>
+
+<head>
+</head>
+
+</html>
