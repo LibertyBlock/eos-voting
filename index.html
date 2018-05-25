@@ -1,24 +1,37 @@
 <html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
 </head>
 
-<body>
-    <div>
-        <label>Private Key</label>
-        <input id="private-key" value="">
+<body class="container">
+    <h1 class="text-center">EOS Block Producer Voting</h1>
+    <h5 class="text-center">By LibertyBlock</h5>
+    
+    <section id="alerts">
+        <div class="alert alert-warning" role="alert">
+            We will only use your private key to sign the transaction locally. Your key will never leave the local machine!
+         </div>
+    </section>
+
+    <div class="form-group">
+        <label for="private-key">Private Key</label><br>
+        <input id="private-key" class="form-control input-lg">
 
     </div>
     <div>
-        <label><strong>My Block Producers: </strong></label>
-        <span id="my-bps"></span>
+        <label><strong>Selected Producers: </strong></label>
+        <span id="selected-bps"></span>
     </div>
-    <div>
-        <button id="vote" onclick="vote()">Vote</button>
+    <div class="form-group">
+        <button id="vote" class="btn" onclick="vote()">Vote</button>
     </div>
 
-    <h2>Block Producers</h2>
-    <table id="block-producers">
+    <h2>Select Block Producers</h2>
+    <div class="form-group">
+        <input type="search" id="filter-prods" class="form-control" placeholder="Filter Producers" onkeyup="filterProds()">
+    </div>
+    <table id="block-producers" class="table">
         <thead><tr>
             <th>Vote</th>
             <th>Producer Name</th>
