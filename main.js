@@ -23,7 +23,8 @@ function getEos() {
 		keyProvider: privateKey,
 		httpEndpoint: "http://13.71.191.137:8889",
 		broadcast: true,
-		sign: true
+		sign: true,
+        expireInSeconds: 30
 	}
 	return Eos.Testnet(config);
 }
@@ -95,6 +96,12 @@ function vote () {
         </div>`
         document.getElementById('alerts').innerHTML += alert;
         document.getElementById('private-key').value = "";
+    }).catch(err => {
+        err = JSON.parse(err);
+            Error: ${err.error.what}
+        </div>`
+        document.getElementById('alerts').innerHTML += alert;
+
     });
 }
 
