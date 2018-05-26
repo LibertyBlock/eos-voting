@@ -79,13 +79,17 @@ function prettyNumber(num) {
 
 function vote () {
     var eos = getEos();
+
     var selectedBPs = getSelectedBPs();
     if (selectedBPs.length > 30) {
         var alert = `<div class="alert alert-danger" role="alert">
             Maximum 30 block producers can be selected
         </div>`
         document.getElementById('alerts').innerHTML += alert;
+        return false;
     }
+
+    document.getElementById('vote').disabled = true;
 
     var sortedBPs = selectedBPs.sort();
     eos.transaction(tr => {
@@ -97,13 +101,16 @@ function vote () {
         </div>`
         document.getElementById('alerts').innerHTML += alert;
         document.getElementById('private-key').value = "";
+        
+        document.getElementById('vote').disabled = false;
     }).catch(err => {
-        err = JSON.parse(err);
+        console.log(err);
         var alert = `<div class="alert alert-danger" role="alert">
-            Error: ${err.error.what}
+            Error: Transaction failed. Check private key.
         </div>`;
         document.getElementById('alerts').innerHTML += alert;
 
+        document.getElementById('vote').disabled = false;
     });
 }
 
