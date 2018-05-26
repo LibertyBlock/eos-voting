@@ -1,4 +1,4 @@
-getProducers().then(checkLibertyBlock);
+getProducers();
 
 function checkLibertyBlock() {
     document.querySelector("input[value=libertylion1]").checked = true
