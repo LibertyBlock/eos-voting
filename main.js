@@ -24,6 +24,7 @@ function getEos() {
 		httpEndpoint: "http://13.71.191.137:8889",
 		broadcast: true,
 		sign: true,
+        chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca",
         expireInSeconds: 30
 	}
 	return Eos.Testnet(config);
@@ -98,8 +99,9 @@ function vote () {
         document.getElementById('private-key').value = "";
     }).catch(err => {
         err = JSON.parse(err);
+        var alert = `<div class="alert alert-danger" role="alert">
             Error: ${err.error.what}
-        </div>`
+        </div>`;
         document.getElementById('alerts').innerHTML += alert;
 
     });
