@@ -99,6 +99,7 @@ function getSelectedBPs () {
 function updateSelectedBPs() {
     var checked = getSelectedBPs();
     document.getElementById("selected-bps").innerHTML = checked.join(', ');
+    document.getElementById("selected-count").innerHTML = checked.length;
 }
 
 function prettyNumber(num) {
