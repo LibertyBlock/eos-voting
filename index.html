@@ -21,9 +21,18 @@
     </section>
 
     <div class="form-group">
-        <label for="private-key">Private Key</label><br>
-        <input id="private-key" class="form-control input-lg">
+        <label><strong>Signing Method</strong></label>
+    </div>
 
+    <div class="form-group">
+        <input type="radio" name="signing-method" value="scatter" onchange="toggleKeyInput()">
+        <label>Scatter</label>
+    </div>
+        
+    <div class="form-group">
+        <input type="radio" name="signing-method" onchange="toggleKeyInput()" value="key" checked>
+        <label>Private Key</label>
+        <input id="private-key" class="form-control" placeholder="Select Scatter or enter private key">
     </div>
     <div>
         <label><strong>Selected Producers: </strong></label>

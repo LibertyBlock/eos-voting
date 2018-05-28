@@ -5,6 +5,18 @@ function checkLibertyBlock() {
     updateSelectedBPs();
 }
 
+function toggleKeyInput () {
+    var checked = document.querySelector('input[name="signing-method"]:checked').value;
+    var privateKeyInput =  document.getElementById("private-key");
+    var keyAlert = document.getElementById("key-alert");
+    if (checked == "key")
+        privateKeyInput.style.display = "block";
+    else {
+        privateKeyInput.style.display = "none";
+        scatter.getIdentity();
+    }
+}
+
 function filterProds () {
     var search = document.getElementById('filter-prods').value;
     document.querySelectorAll('.prod-row').forEach(function (row) {
@@ -18,16 +30,33 @@ function filterProds () {
 }
 
 function getEos() {
-	var privateKey = document.getElementById('private-key').value;
-	var config = {
-		keyProvider: privateKey,
-		httpEndpoint: "http://13.71.191.137:8889",
-		broadcast: true,
-		sign: true,
-        chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca",
-        expireInSeconds: 30
-	}
-	return Eos.Testnet(config);
+    var method = document.querySelector('input[name="signing-method"]:checked').value;
+    if (method == "scatter") {
+        var network = {
+            blockchain: 'eos',
+            host: "13.71.191.137",
+            port: 8889,
+            chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca"
+        }
+        var config = {
+            broadcast: true,
+            sign: true,
+            chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca"
+        }        
+        return scatter.eos(network, Eos.Testnet, config);
+    }
+    else {
+        var privateKey = document.getElementById('private-key').value;
+        var config = {
+            keyProvider: privateKey,
+            httpEndpoint: "http://13.71.191.137:8889",
+            broadcast: true,
+            sign: true,
+            chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca",
+            expireInSeconds: 30
+        }
+        return Eos.Testnet(config);
+    }
 }
 
 function getProducers() {
@@ -85,7 +114,7 @@ function vote () {
         var alert = `<div class="alert alert-danger" role="alert">
             Maximum 30 block producers can be selected
         </div>`
-        document.getElementById('alerts').innerHTML += alert;
+        document.getElementById('alerts').innerHTML = alert;
         return false;
     }
 
@@ -99,16 +128,16 @@ function vote () {
             Your vote has been cast. Refresh page for new vote counts.<br>
             TxID: ${tx.transaction_id}
         </div>`
-        document.getElementById('alerts').innerHTML += alert;
+        document.getElementById('alerts').innerHTML = alert;
         document.getElementById('private-key').value = "";
         
         document.getElementById('vote').disabled = false;
     }).catch(err => {
-        console.log(err);
+        console.error(err);
         var alert = `<div class="alert alert-danger" role="alert">
-            Error: Transaction failed. Check private key.
+            Error: Transaction failed. ${err.message}
         </div>`;
-        document.getElementById('alerts').innerHTML += alert;
+        document.getElementById('alerts').innerHTML = alert;
 
         document.getElementById('vote').disabled = false;
     });
