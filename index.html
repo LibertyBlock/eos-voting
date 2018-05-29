@@ -21,6 +21,11 @@
     </section>
 
     <div class="form-group">
+        <label for="eos-account"><strong>Account Name</strong></label>
+        <input id="eos-account" class="form-control" placeholder="EOS Account">
+    </div>
+
+    <div class="form-group">
         <label><strong>Signing Method</strong></label>
     </div>
 
@@ -32,12 +37,15 @@
     <div class="form-group">
         <input type="radio" name="signing-method" onchange="toggleKeyInput()" value="key" checked>
         <label>Private Key</label>
-        <input id="private-key" class="form-control" placeholder="Select Scatter or enter private key">
+        <input id="private-key" class="form-control" placeholder="Private key">
+        </div>
     </div>
-    <div>
+
+    <div class="form-group">
         <label><strong>Selected Producers (<span id="selected-count">0</span>): </strong></label>
         <span id="selected-bps"></span>
     </div>
+
     <div class="form-group">
         <button id="vote" class="btn" onclick="vote()">Vote</button>
     </div>

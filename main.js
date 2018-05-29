@@ -9,8 +9,9 @@ function toggleKeyInput () {
     var checked = document.querySelector('input[name="signing-method"]:checked').value;
     var privateKeyInput =  document.getElementById("private-key");
     var keyAlert = document.getElementById("key-alert");
-    if (checked == "key")
+    if (checked == "key") {
         privateKeyInput.style.display = "block";
+    }
     else {
         privateKeyInput.style.display = "none";
         scatter.getIdentity();
@@ -122,8 +123,9 @@ function vote () {
     document.getElementById('vote').disabled = true;
 
     var sortedBPs = selectedBPs.sort();
+    var account = document.getElementById('eos-account').value;
     eos.transaction(tr => {
-        tr.voteproducer("libertylion1", "", sortedBPs);
+        tr.voteproducer(account, "", sortedBPs);
     }).then(tx => {
         var alert = `<div class="alert alert-success" role="alert">
             Your vote has been cast. Refresh page for new vote counts.<br>
