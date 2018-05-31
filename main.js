@@ -14,7 +14,23 @@ function toggleKeyInput () {
     }
     else {
         privateKeyInput.style.display = "none";
-        scatter.getIdentity();
+        if (typeof scatter === "undefined") {
+            var alert = `<div class="alert alert-danger" role="alert">
+                Scatter is not installed. 
+            </div>`
+            document.getElementById('alerts').innerHTML = alert;
+            return false;
+        }
+        else {
+            scatter.getIdentity().catch(err => {
+                if (err.type == "locked") {
+                    var alert = `<div class="alert alert-danger" role="alert">
+                        Please refresh page after unlocking Scatter. 
+                    </div>`
+                    document.getElementById('alerts').innerHTML = alert;
+                }
+            });
+        }
     }
 }
 
@@ -108,6 +124,17 @@ function prettyNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
+function refreshKeys() {
+    scatter.forgetIdentity()
+        .then(scatter.getIdentity)
+        .then(() => {
+            var alert = `<div class="alert alert-info" role="alert">
+                Keys refreshed.
+            </div>`
+            document.getElementById('alerts').innerHTML = alert;
+        });
+}
+
 function vote () {
     var eos = getEos();
 
@@ -137,8 +164,18 @@ function vote () {
         document.getElementById('vote').disabled = false;
     }).catch(err => {
         console.error(err);
+        if (typeof err == "string") {
+            err = JSON.parse(err);
+            var message = `Error: ${err.error.details[0].message}`;
+        }
+        else if (err.type == "account_missing")
+            var message = `Error: Key does not match account. Click here to use a <a href="#" onclick="refreshKeys()">different identity</a>`;
+        else if (err.message)
+            var message = `Error: Transaction failed. ${err.message}`;
+        else 
+            var message = `Error: Transaction failed. ${err.type}. Try refreshing page.`;
         var alert = `<div class="alert alert-danger" role="alert">
-            Error: Transaction failed. ${err.message}
+            ${message}
         </div>`;
         document.getElementById('alerts').innerHTML = alert;
 
