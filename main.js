@@ -16,7 +16,7 @@ function toggleKeyInput () {
         privateKeyInput.style.display = "none";
         if (typeof scatter === "undefined") {
             var alert = `<div class="alert alert-danger" role="alert">
-                Scatter is not installed. 
+                Scatter is not installed. Refresh page after installing.
             </div>`
             document.getElementById('alerts').innerHTML = alert;
             return false;
@@ -48,11 +48,14 @@ function filterProds () {
 
 function getEos() {
     var method = document.querySelector('input[name="signing-method"]:checked').value;
+    var network = document.getElementById('network').value;
+    var ip = network.slice(network.lastIndexOf("/") + 1, network.lastIndexOf(":"));
+    var port = network.slice(network.lastIndexOf(":") + 1);
     if (method == "scatter") {
         var network = {
             blockchain: 'eos',
-            host: "13.71.191.137",
-            port: 8889,
+            host: ip,
+            port: port,
             chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca"
         }
         var config = {
@@ -66,7 +69,7 @@ function getEos() {
         var privateKey = document.getElementById('private-key').value;
         var config = {
             keyProvider: privateKey,
-            httpEndpoint: "http://13.71.191.137:8889",
+            httpEndpoint: network,
             broadcast: true,
             sign: true,
             chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca",
@@ -86,6 +89,7 @@ function getProducers() {
         limit: 200
     }
     var tbody = document.querySelector("#block-producers tbody");
+    tbody.innerHTML = '';
 
     return eos.getTableRows(params).then(resp => {
         var sorted = resp.rows.sort((a,b) => Number(a.total_votes) > Number(b.total_votes) ? -1:1);

@@ -21,6 +21,14 @@
     </section>
 
     <div class="form-group">
+        <label for="eos-account"><strong>Network</strong></label>
+        <select onchange="getProducers()" class="form-control" id="network">
+            <option value="http://jungle.libertyblock.io:8888">Jungle Testnet</option>
+            <option value="http://mainnet.libertyblock.io:8888" disabled>EOS Mainnet</option>
+        </select>
+    </div>
+
+    <div class="form-group">
         <label for="eos-account"><strong>Account Name</strong></label>
         <input id="eos-account" class="form-control" placeholder="EOS Account">
     </div>
