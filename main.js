@@ -93,10 +93,11 @@ function getProducers() {
 
     return eos.getTableRows(params).then(resp => {
         var sorted = resp.rows.sort((a,b) => Number(a.total_votes) > Number(b.total_votes) ? -1:1);
-        sorted.map(prod => `<tr class="prod-row">
+        sorted.map((prod, i) => `<tr class="prod-row">
             <td><input type="checkbox" name="vote-prods" value="${prod.owner}"></td>
             <td>${prod.owner}</td>
             <td>${prettyNumber(prod.total_votes)}</td>
+            <td>${i+1}</td>
         </tr>`)
         .forEach(row => tbody.innerHTML += row);
 
@@ -124,7 +125,7 @@ function updateSelectedBPs() {
 }
 
 function prettyNumber(num) {
-    num = parseInt(parseInt(num) / 1e10 * 1.4);
+    num = parseInt(parseInt(num) / 1e10 * 2.8);
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
