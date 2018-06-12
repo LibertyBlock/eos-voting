@@ -52,30 +52,30 @@ function getEos() {
     var ip = network.slice(network.lastIndexOf("/") + 1, network.lastIndexOf(":"));
     var port = network.slice(network.lastIndexOf(":") + 1);
     if (method == "scatter") {
-        var network = {
+        var scatterNetwork = {
             blockchain: 'eos',
             host: ip,
             port: port,
-            chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca"
+            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
         }
         var config = {
             broadcast: true,
             sign: true,
             chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca"
         }        
-        return scatter.eos(network, Eos.Testnet, config);
+        return scatter.eos(scatterNetwork, Eos, config);
     }
     else {
         var privateKey = document.getElementById('private-key').value;
         var config = {
-            keyProvider: privateKey,
+            keyProvider: [privateKey],
             httpEndpoint: network,
             broadcast: true,
             sign: true,
-            chainId: "a628a5a6123d6ed60242560f23354c557f4a02826e223bb38aad79ddeb9afbca",
+            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
             expireInSeconds: 30
         }
-        return Eos.Testnet(config);
+        return Eos(config);
     }
 }
 
