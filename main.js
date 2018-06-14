@@ -1,7 +1,7 @@
-getProducers();
+getProducers().then(checkLibertyBlock);
 
 function checkLibertyBlock() {
-    document.querySelector("input[value=libertylion1]").checked = true
+    document.querySelector("input[value=libertyblock]").checked = true
     updateSelectedBPs();
 }
 
