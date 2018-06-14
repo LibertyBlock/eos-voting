@@ -86,7 +86,7 @@ function getProducers() {
         scope: "eosio",
         code: "eosio",
         table: "producers", 
-        limit: 200
+        limit: 500
     }
     var tbody = document.querySelector("#block-producers tbody");
     tbody.innerHTML = '';
